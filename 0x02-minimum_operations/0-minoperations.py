@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 '''Module for Minimum Operations challenge in Python3.'''
 
+
 def minOperations(n):
     '''Calculates the fewest number of operations
     to achieve n H characters.
-    
+
     Parameters:
     - n: The target number of H characters.
 
@@ -30,7 +31,7 @@ def minOperations(n):
             continue
 
         remaining = n - pasted_chars  # Num of H xters needed to reach target
-        
+
         # Check if achieving target is impossible
         if remaining < clipboard:
             return 0
@@ -50,4 +51,3 @@ def minOperations(n):
         return counter
     else:
         return 0
-
