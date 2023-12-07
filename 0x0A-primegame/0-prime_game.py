@@ -1,3 +1,9 @@
+#!/usr/bin/python3
+"""
+Prime Game
+"""
+
+
 def isWinner(x, nums):
     def calculate_primes(n):
         primes = [True] * (n + 1)
