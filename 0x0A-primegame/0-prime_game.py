@@ -1,46 +1,29 @@
-#!/usr/bin/python3
-"""
-Prime Game
-"""
-
-
 def isWinner(x, nums):
-    def is_prime(num):
-        if num < 2:
-            return False
-        for i in range(2, int(num**0.5) + 1):
-            if num % i == 0:
-                return False
-        return True
+    def calculate_primes(n):
+        primes = [True] * (n + 1)
+        primes[0] = primes[1] = False
+        for i in range(2, int(n**0.5) + 1):
+            if primes[i]:
+                for j in range(i*i, n + 1, i):
+                    primes[j] = False
+        return [num for num in range(n + 1) if primes[num]]
 
-    def get_next_prime(nums):
-        for num in nums:
-            if is_prime(num):
-                return num
-        return None
+    def get_winner(round_nums):
+        num_primes = calculate_primes(max(round_nums))
+        xor_sum = 0
+        for num in round_nums:
+            if num in num_primes:
+                xor_sum ^= num_primes.index(num) % 2
 
-    maria_wins = 0
-    ben_wins = 0
+        return "Maria" if xor_sum != 0 else "Ben"
 
-    for n in nums:
-        current_player = "Maria"
+    winners = []
+    for i in range(x):
+        round_winner = get_winner(list(range(1, nums[i] + 1)))
+        winners.append(round_winner)
 
-        while True:
-            prime = get_next_prime(nums)
-            if prime is None:
-                break
-
-            nums = [num for num in nums if num % prime != 0]
-
-            if current_player == "Maria":
-                current_player = "Ben"
-            else:
-                current_player = "Maria"
-
-        if current_player == "Maria":
-            maria_wins += 1
-        else:
-            ben_wins += 1
+    maria_wins = winners.count("Maria")
+    ben_wins = winners.count("Ben")
 
     if maria_wins > ben_wins:
         return "Maria"
